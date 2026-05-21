@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Global Employment Compliance Assistant — Usha Kumbhar</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #0f1117;
+    --paper: #f5f2eb;
+    --accent: #1a4a3a;
+    --accent-light: #2d7a5f;
+    --amber: #e8a830;
+    --muted: #6b7280;
+    --border: #d9d4c7;
+    --white: #ffffff;
+    --tag-bg: #e8f4f0;
+    --tag-color: #1a4a3a;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  .portfolio-header {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 48px 40px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .portfolio-header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: 0.3;
+  }
+
+  .portfolio-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 12px;
+  }
+
+  .portfolio-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 32px;
+    line-height: 1.15;
+    margin-bottom: 12px;
+    max-width: 480px;
+  }
+
+  .portfolio-sub {
+    font-size: 13px;
+    color: #9ca3af;
+    line-height: 1.6;
+    max-width: 420px;
+  }
+
+  .by-line {
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Serif Display', serif;
+    font-size: 15px;
+    color: var(--paper);
+  }
+
+  .by-name { font-size: 13px; font-weight: 500; }
+  .by-role { font-size: 11px; color: #9ca3af; }
+
+  .tabs {
+    display: flex;
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .tab {
+    padding: 14px 0;
+    margin-right: 32px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    border-top: none; border-left: none; border-right: none;
+    white-space: nowrap;
+    transition: all 0.2s;
+    background: none;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  .panel { display: none; padding: 40px; max-width: 860px; }
+  .panel.active { display: block; }
+
+  .section-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 24px;
+    margin-bottom: 16px;
+    line-height: 1.3;
+  }
+
+  .prose {
+    font-size: 14px;
+    line-height: 1.75;
+    color: #374151;
+    max-width: 640px;
+  }
+
+  .card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 24px 0; }
+
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+  }
+
+  .card-icon { font-size: 22px; margin-bottom: 10px; }
+  .card-title { font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+  .card-text { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+  .stat-row { display: flex; gap: 16px; margin: 24px 0; flex-wrap: wrap; }
+
+  .stat {
+    background: var(--accent);
+    color: var(--white);
+    border-radius: 10px;
+    padding: 16px 20px;
+    min-width: 120px;
+  }
+
+  .stat-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .stat-label { font-size: 11px; opacity: 0.8; }
+
+  .wireframe-container {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 24px 0;
+  }
+
+  .wf-titlebar {
+    background: #f0ede6;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .wf-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .wf-body { padding: 24px; }
+
+  .wf-topbar {
+    background: var(--ink);
+    border-radius: 8px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .wf-logo { color: var(--paper); font-size: 13px; font-weight: 600; }
+  .wf-nav { display: flex; gap: 12px; }
+  .wf-nav span { color: #9ca3af; font-size: 11px; }
+
+  .wf-hero {
+    background: linear-gradient(135deg, #f0f9f5 0%, #e8f4f0 100%);
+    border: 1px dashed #c5e0d8;
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .wf-hero-label { font-size: 11px; color: var(--muted); margin-bottom: 8px; }
+  .wf-hero-h { font-family: 'DM Serif Display', serif; font-size: 20px; color: var(--ink); margin-bottom: 8px; }
+  .wf-hero-sub { font-size: 12px; color: var(--muted); }
+  .wf-input-row { display: flex; gap: 8px; margin: 12px 0; }
+
+  .wf-input {
+    flex: 1;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 12px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .wf-btn {
+    background: var(--accent);
+    color: var(--white);
+    border: none;
+    border-radius: 6px;
+    padding: 10px 16px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .wf-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  .wf-block {
+    background: #f9f7f3;
+    border: 1px dashed var(--border);
+    border-radius: 8px;
+    padding: 16px;
+  }
+
+  .wf-block-label { font-size: 10px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
+  .wf-line { height: 8px; background: var(--border); border-radius: 4px; margin: 6px 0; }
+  .wf-line.short { width: 60%; }
+  .wf-line.med { width: 80%; }
+
+  .annotation {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    margin: 10px 0;
+    padding: 10px 12px;
+    background: #fffbf0;
+    border-left: 3px solid var(--amber);
+    border-radius: 0 6px 6px 0;
+  }
+
+  .annotation-num {
+    background: var(--amber);
+    color: var(--white);
+    font-size: 10px;
+    font-weight: 700;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .annotation-text { font-size: 12px; color: #374151; line-height: 1.5; }
+
+  .product-app {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 24px 0;
+  }
+
+  .app-header {
+    background: var(--ink);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .app-logo { font-family: 'DM Serif Display', serif; font-size: 16px; color: var(--paper); }
+  .app-logo span { color: var(--amber); }
+
+  .app-badge {
+    background: var(--accent);
+    color: var(--white);
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 20px;
+  }
+
+  .app-body { padding: 28px 24px; }
+
+  .app-intro {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 24px;
+    line-height: 1.6;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .form-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--ink);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  .form-row { margin-bottom: 16px; }
+
+  .form-select, .form-textarea {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--ink);
+    background: var(--paper);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .form-select:focus, .form-textarea:focus { border-color: var(--accent); }
+  .form-textarea { resize: vertical; min-height: 80px; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  .submit-btn {
+    width: 100%;
+    background: var(--accent);
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    padding: 14px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 8px;
+  }
+
+  .submit-btn:hover { background: var(--accent-light); }
+  .submit-btn:disabled { background: var(--muted); cursor: not-allowed; }
+
+  .response-box {
+    margin-top: 24px;
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    display: none;
+  }
+
+  .response-box.visible { display: block; }
+
+  .response-header {
+    background: var(--accent);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .response-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--amber); }
+  .response-header-text { font-size: 12px; font-weight: 600; color: var(--white); }
+
+  .response-body {
+    padding: 20px;
+    font-size: 13px;
+    line-height: 1.8;
+    color: #1f2937;
+    min-height: 80px;
+  }
+
+  .disclaimer {
+    font-size: 11px;
+    color: var(--muted);
+    padding: 10px 16px;
+    border-top: 1px solid var(--border);
+    background: var(--white);
+  }
+
+  .loading-dots { display: inline-flex; gap: 4px; align-items: center; }
+  .loading-dots span {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: bounce 1.2s infinite;
+    display: inline-block;
+  }
+  .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+  .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes bounce {
+    0%, 60%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-6px); }
+  }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 16px 0; }
+  .tag {
+    background: var(--tag-bg);
+    color: var(--tag-color);
+    font-size: 11px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
+
+  .decision {
+    display: flex;
+    gap: 14px;
+    margin: 14px 0;
+    padding: 14px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+
+  .decision-num {
+    background: var(--ink);
+    color: var(--paper);
+    font-size: 11px;
+    font-weight: 700;
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .decision-title { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+  .decision-text { font-size: 12px; color: var(--muted); line-height: 1.6; }
+  .divider { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
+
+  @media (max-width: 600px) {
+    .card-grid, .form-grid, .wf-cols { grid-template-columns: 1fr; }
+    .portfolio-header, .tabs, .panel { padding-left: 20px; padding-right: 20px; }
+    .portfolio-title { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="portfolio-header">
+  <div class="portfolio-eyebrow">Portfolio Case Study — G-P Gia</div>
+  <div class="portfolio-title">Global Employment Compliance Assistant</div>
+  <div class="portfolio-sub">A working AI-powered product built to demonstrate the full problem → wireframe → shipped code arc — relevant to G-P's GIA platform for HR and legal compliance teams.</div>
+  <div class="by-line">
+    <div class="avatar">U</div>
+    <div>
+      <div class="by-name">Usha Kumbhar</div>
+      <div class="by-role">Engineer-Turned-Product Leader · AI-Native PM · usha.amp@gmail.com</div>
+    </div>
+  </div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="showTab('problem',this)">01 · Problem</button>
+  <button class="tab" onclick="showTab('wireframe',this)">02 · Wireframe</button>
+  <button class="tab" onclick="showTab('decisions',this)">03 · Product Decisions</button>
+  <button class="tab" onclick="showTab('shipped',this)">04 · Shipped Product</button>
+</div>
+
+<!-- PROBLEM -->
+<div id="tab-problem" class="panel active">
+  <div class="section-label">Discovery</div>
+  <div class="section-title">The Problem</div>
+  <div class="prose">HR leaders and legal ops teams at companies expanding globally face a persistent challenge: every country has different employment laws, mandatory benefits, notice periods, and termination rules. Getting answers requires expensive legal counsel, weeks of research, or trusting outdated internal documentation.</div>
+
+  <div class="stat-row">
+    <div class="stat"><div class="stat-num">180+</div><div class="stat-label">Countries G-P operates in</div></div>
+    <div class="stat"><div class="stat-num">95%</div><div class="stat-label">Compliance cost reduction GIA targets</div></div>
+    <div class="stat"><div class="stat-num">Days</div><div class="stat-label">Not months — G-P's hiring promise</div></div>
+  </div>
+
+  <div class="card-grid">
+    <div class="card"><div class="card-icon">⏱</div><div class="card-title">Time to compliance answer</div><div class="card-text">HR teams wait days to weeks for legal counsel to respond to basic employment questions about a new market they are entering.</div></div>
+    <div class="card"><div class="card-icon">💸</div><div class="card-title">Cost of outside counsel</div><div class="card-text">Outside legal counsel charges $400–$800/hr for questions GIA can answer instantly from vetted compliance knowledge.</div></div>
+    <div class="card"><div class="card-icon">🌍</div><div class="card-title">Fragmented knowledge</div><div class="card-text">Compliance knowledge lives in PDFs, legal memos, and people's heads. No single system surfaces the right answer for the right country.</div></div>
+    <div class="card"><div class="card-icon">⚠️</div><div class="card-title">Risk of getting it wrong</div><div class="card-text">Non-compliance with local employment law creates legal liability, employee disputes, and reputational damage in new markets.</div></div>
+  </div>
+
+  <div class="section-label" style="margin-top:28px;">User Research — Jobs To Be Done</div>
+  <div class="tags">
+    <span class="tag">🔍 "What are the mandatory benefits in [country]?"</span>
+    <span class="tag">📋 "What notice period is legally required?"</span>
+    <span class="tag">🚨 "What can I include in a termination clause?"</span>
+    <span class="tag">🗂 "Generate a compliant employment contract clause"</span>
+    <span class="tag">⚖️ "What are the local payroll obligations?"</span>
+  </div>
+  <div class="prose" style="margin-top:16px;">The insight: HR leaders do not want to read legislation. They want a trusted colleague who already knows the answer and can deliver it in plain language — instantly.</div>
+</div>
+
+<!-- WIREFRAME -->
+<div id="tab-wireframe" class="panel">
+  <div class="section-label">Design</div>
+  <div class="section-title">Wireframe</div>
+  <div class="prose">The interface had to feel like a knowledgeable colleague, not a legal database. Clean input, instant output, zero learning curve.</div>
+
+  <div class="wireframe-container">
+    <div class="wf-titlebar">
+      <div class="wf-dot" style="background:#ef4444"></div>
+      <div class="wf-dot" style="background:#f59e0b"></div>
+      <div class="wf-dot" style="background:#22c55e"></div>
+      <span style="font-size:11px;color:#9ca3af;margin-left:8px;">compliance-assistant.gp.com</span>
+    </div>
+    <div class="wf-body">
+      <div class="wf-topbar">
+        <div class="wf-logo">G-P Compliance Assistant</div>
+        <div class="wf-nav"><span>Dashboard</span><span>History</span><span>Settings</span></div>
+      </div>
+      <div class="wf-hero">
+        <div class="wf-hero-label">Powered by GIA — Global Employment Intelligence</div>
+        <div class="wf-hero-h">Get instant compliance answers for any country</div>
+        <div class="wf-hero-sub">Ask about employment law, benefits, contracts, and termination — in plain language</div>
+        <div class="wf-input-row" style="margin-top:16px;">
+          <div class="wf-input">Select country...</div>
+          <div class="wf-input">Employment type...</div>
+        </div>
+        <div class="wf-input-row">
+          <div class="wf-input" style="flex:3;">Describe your compliance question...</div>
+          <button class="wf-btn">Ask GIA</button>
+        </div>
+      </div>
+      <div class="wf-cols">
+        <div class="wf-block">
+          <div class="wf-block-label">Compliance Response</div>
+          <div class="wf-line"></div><div class="wf-line med"></div><div class="wf-line short"></div><div class="wf-line"></div><div class="wf-line med"></div>
+        </div>
+        <div class="wf-block">
+          <div class="wf-block-label">Key Requirements</div>
+          <div class="wf-line short"></div><div class="wf-line med"></div><div class="wf-line short"></div><div class="wf-line"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label" style="margin-top:24px;">Wireframe Annotations</div>
+  <div class="annotation"><div class="annotation-num">1</div><div class="annotation-text"><strong>Country + Employment Type selectors first</strong> — constrains the query scope before natural language input. Reduces hallucination risk and improves compliance specificity. HR leaders think in terms of jurisdiction first.</div></div>
+  <div class="annotation"><div class="annotation-num">2</div><div class="annotation-text"><strong>Natural language input, not form fields</strong> — the job-to-be-done is asking a question, not filling a form. Removes cognitive load and mirrors how people actually think about compliance problems.</div></div>
+  <div class="annotation"><div class="annotation-num">3</div><div class="annotation-text"><strong>Two-column response layout</strong> — full compliance narrative on the left, key requirements summary on the right. Serves two users simultaneously: the HR generalist who reads everything, and the legal ops professional who scans for specifics.</div></div>
+  <div class="annotation"><div class="annotation-num">4</div><div class="annotation-text"><strong>No account creation on first use</strong> — activation happens through value delivery, not registration friction. PQL trigger fires after third query — consistent with product-led growth principles.</div></div>
+</div>
+
+<!-- DECISIONS -->
+<div id="tab-decisions" class="panel">
+  <div class="section-label">Product Thinking</div>
+  <div class="section-title">Key Product Decisions</div>
+  <div class="prose">A record of the decisions made during product development — the trade-offs considered and the reasoning behind each choice.</div>
+
+  <div style="margin-top:24px;">
+    <div class="decision"><div class="decision-num">1</div><div><div class="decision-title">Country + type selectors before free text</div><div class="decision-text">Alternative considered: pure natural language input only. Rejected because compliance answers without jurisdictional context are unreliable. Structured selectors constrain the query space and improve accuracy. Trade-off: slightly more friction on input, significantly higher output quality.</div></div></div>
+    <div class="decision"><div class="decision-num">2</div><div><div class="decision-title">Plain language output, not legal citation format</div><div class="decision-text">HR leaders are not lawyers. Responses written in accessible language with clear structure outperform dense legal prose for activation and retention. Legal citations available on request — not forced on every output.</div></div></div>
+    <div class="decision"><div class="decision-num">3</div><div><div class="decision-title">No authentication wall on first use</div><div class="decision-text">Self-serve activation model — user experiences value before being asked to register. Registration triggered after demonstrable engagement. PQL signal: user saves or copies a response.</div></div></div>
+    <div class="decision"><div class="decision-num">4</div><div><div class="decision-title">Scope limited to employment compliance only</div><div class="decision-text">Deliberate scope constraint. Reduces liability, improves model accuracy, and sharpens the product's value proposition. Does one thing perfectly rather than doing everything adequately.</div></div></div>
+    <div class="decision"><div class="decision-num">5</div><div><div class="decision-title">Disclaimer on every response</div><div class="decision-text">Not optional. Compliance context requires explicit framing that responses are guidance, not legal advice. Builds trust rather than eroding it — users who trust the boundaries of a tool use it more, not less.</div></div></div>
+  </div>
+
+  <hr class="divider">
+  <div class="section-label">Metrics That Matter — First 30 Days</div>
+  <div class="tags" style="margin-top:12px;">
+    <span class="tag">Query completion rate</span>
+    <span class="tag">Time to first value (&lt;60s target)</span>
+    <span class="tag">Query → save/copy rate (PQL signal)</span>
+    <span class="tag">Return visit rate</span>
+    <span class="tag">Country coverage gaps</span>
+    <span class="tag">Response accuracy flags</span>
+  </div>
+</div>
+
+<!-- SHIPPED -->
+<div id="tab-shipped" class="panel">
+  <div class="section-label">Shipped</div>
+  <div class="section-title">Working Product</div>
+  <div class="prose">This is the working product — powered by Claude, the same AI that powers G-P's GIA platform. Ask a real employment compliance question below.</div>
+
+  <div class="product-app">
+    <div class="app-header">
+      <div class="app-logo">G·P <span>Compliance Assistant</span></div>
+      <div class="app-badge">Powered by GIA</div>
+    </div>
+    <div class="app-body">
+      <div class="app-intro">Get instant employment compliance guidance for any country. Select a jurisdiction, employment type, and describe your question in plain language.</div>
+
+      <div class="form-grid">
+        <div class="form-row">
+          <label class="form-label">Country</label>
+          <select class="form-select" id="country">
+            <option value="">Select country...</option>
+            <option>United Arab Emirates</option>
+            <option>India</option>
+            <option>United Kingdom</option>
+            <option>United States</option>
+            <option>Germany</option>
+            <option>Australia</option>
+            <option>Singapore</option>
+            <option>Morocco</option>
+            <option>Egypt</option>
+            <option>France</option>
+            <option>Brazil</option>
+            <option>Canada</option>
+            <option>Japan</option>
+            <option>Netherlands</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label class="form-label">Employment Type</label>
+          <select class="form-select" id="emptype">
+            <option value="">Select type...</option>
+            <option>Full-time permanent</option>
+            <option>Fixed-term contract</option>
+            <option>Part-time</option>
+            <option>Independent contractor</option>
+            <option>Probationary period</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label class="form-label">Your Compliance Question</label>
+        <textarea class="form-textarea" id="question" placeholder="e.g. What are the mandatory notice periods for termination? What annual leave is legally required? What are the mandatory employer contributions?"></textarea>
+      </div>
+
+      <button class="submit-btn" id="askBtn" onclick="askGIA()">Ask GIA →</button>
+
+      <div class="response-box" id="responseBox">
+        <div class="response-header">
+          <div class="response-dot"></div>
+          <div class="response-header-text" id="responseTitle">GIA Compliance Guidance</div>
+        </div>
+        <div class="response-body" id="responseBody"></div>
+        <div class="disclaimer">⚠️ This guidance is for informational purposes only and does not constitute legal advice. Always verify with qualified local legal counsel before making employment decisions.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function showTab(id, el) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  el.classList.add('active');
+}
+
+async function askGIA() {
+  const country = document.getElementById('country').value;
+  const emptype = document.getElementById('emptype').value;
+  const question = document.getElementById('question').value.trim();
+
+  if (!country || !question) {
+    alert('Please select a country and enter your compliance question.');
+    return;
+  }
+
+  const btn = document.getElementById('askBtn');
+  const responseBox = document.getElementById('responseBox');
+  const responseBody = document.getElementById('responseBody');
+  const responseTitle = document.getElementById('responseTitle');
+
+  btn.disabled = true;
+  btn.textContent = 'Consulting GIA...';
+  responseBox.classList.add('visible');
+  responseTitle.textContent = 'GIA Compliance Guidance — ' + country + (emptype ? ' · ' + emptype : '');
+  responseBody.innerHTML = '<div class="loading-dots"><span></span><span></span><span></span></div>';
+
+  const prompt = `You are GIA, G-P's AI-powered global employment compliance assistant. You provide accurate, structured, plain-language compliance guidance for HR leaders and legal ops teams.
+
+Country: ${country}
+Employment Type: ${emptype || 'Not specified'}
+Question: ${question}
+
+Provide a clear, well-structured compliance response covering:
+1. Direct answer to the question
+2. Key legal requirements and thresholds
+3. Important caveats or exceptions
+4. Practical implications for the HR leader
+
+Format your response with clear headings using **bold** for section titles. Be specific with numbers, timeframes, and legal thresholds where known. Write in plain professional language — not legal jargon. Keep it concise but comprehensive. End with one sentence noting that local legal counsel should verify specifics.`;
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+
+    const data = await response.json();
+    const text = data.content?.[0]?.text || 'Unable to retrieve compliance guidance. Please try again.';
+    const formatted = text
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\n\n/g, '</p><p style="margin-top:12px;">')
+      .replace(/\n/g, '<br>');
+    responseBody.innerHTML = '<p>' + formatted + '</p>';
+
+  } catch (err) {
+    responseBody.innerHTML = '<span style="color:#c94040;">Unable to connect to GIA. Please check your connection and try again.</span>';
+  }
+
+  btn.disabled = false;
+  btn.textContent = 'Ask GIA →';
+}
+</script>
+</body>
+</html>
